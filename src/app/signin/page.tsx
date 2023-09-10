@@ -3,6 +3,7 @@ import NextLink from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from '@/styles/signup.module.scss'
+import { signInWithEmail } from '@/lib/firebase/apis/auth'
 
 type formInputs = {
     email: string
@@ -15,7 +16,17 @@ type formInputs = {
 export default function SignInScreen() {
     const { handleSubmit, register } = useForm<formInputs>()
     const [show, setShow] = useState<boolean>(false)
-    const onSubmit = handleSubmit(async (data) => {})
+    const onSubmit = handleSubmit(async (data) => {
+        signInWithEmail({ email: data.email, password: data.password }).then(
+            (res: boolean) => {
+              if (res) {
+                console.log('ログイン成功')
+              } else {
+                console.log('ログイン失敗')
+              }
+            }
+        )
+    })
     return(
         <div className={styles.flexContainer}>
             <div className={styles.vstack}>

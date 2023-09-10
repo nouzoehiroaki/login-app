@@ -3,21 +3,32 @@ import NextLink from 'next/link'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from '@/styles/signup.module.scss'
+import { signUpWithEmail } from '@/lib/firebase/apis/auth'
 
 type formInputs = {
     email: string
     password: string
     confirm: string
 }
-/** サインイン画面
- * @screenname SignInScreen
- * @description ユーザのサインインを行う画面
+/** サインアップ画面
+ * @screenname SignUpScreen
+ * @description ユーザの新規登録を行う画面
  */
 export default function SignUpScreen() {
     const { handleSubmit, register } = useForm<formInputs>()
     const [password, setPassword] = useState(false)
     const [confirm, setConfirm] = useState(false)
-    const onSubmit = handleSubmit(async (data) => {})
+    const onSubmit = handleSubmit(async (data) => {
+        signUpWithEmail({ email: data.email, password: data.password }).then(
+            (res: boolean) => {
+              if (res) {
+                console.log('新規登録成功')
+              } else {
+                console.log('新規登録失敗')
+              }
+            }
+        )
+    })
     const passwordClick = () => setPassword(!password)
     const confirmClick = () => setConfirm(!confirm)
 
