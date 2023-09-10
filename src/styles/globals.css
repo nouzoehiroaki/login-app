@@ -1,0 +1,20 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.notification {
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 5px;
+  text-align: center;
+  width: 100%;
+}
+.notification.success {
+  background-color: #DFF2BF;
+  color: #4F8A10;
+}
+.notification.error {
+  background-color: #FFD2D2;
+  color: #D8000C;
+}
+/*# sourceMappingURL=globals.css.map */

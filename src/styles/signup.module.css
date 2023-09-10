@@ -38,6 +38,13 @@
   padding: 1rem;
   border-radius: 5px;
 }
+.flexContainer .vstack form .vstackInner .formControl input:focus {
+  outline: none;
+}
+.flexContainer .vstack form .vstackInner .formControl.invalid input {
+  border: 1px solid red;
+  box-sizing: border-box;
+}
 .flexContainer .vstack form .vstackInner .formControl .inputGroup {
   position: relative;
 }
@@ -49,6 +56,11 @@
   background: #b9b4b4;
   padding: 0.4rem;
   color: #fff;
+}
+.flexContainer .vstack form .vstackInner .formControl .errorMessage {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 .flexContainer .vstack form .vstackInner .loginBtn {
   background-color: teal;

@@ -1,9 +1,10 @@
 'use client'
 import NextLink from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from '@/styles/signup.module.scss'
-import { signUpWithEmail } from '@/lib/firebase/apis/auth'
+import { signUpWithEmail,FirebaseResult } from '@/lib/firebase/apis/auth'
 
 type formInputs = {
     email: string
@@ -15,16 +16,26 @@ type formInputs = {
  * @description ユーザの新規登録を行う画面
  */
 export default function SignUpScreen() {
-    const { handleSubmit, register } = useForm<formInputs>()
+    const router = useRouter()
+    const { 
+        handleSubmit, 
+        register,
+        getValues,
+        formState: { errors, isSubmitting }
+    } = useForm<formInputs>()
     const [password, setPassword] = useState(false)
     const [confirm, setConfirm] = useState(false)
+    const [notification, setNotification] = useState<{ message: string, status: 'success' | 'error' | null }>({ message: '', status: null });
+
     const onSubmit = handleSubmit(async (data) => {
-        signUpWithEmail({ email: data.email, password: data.password }).then(
-            (res: boolean) => {
-              if (res) {
-                console.log('新規登録成功')
+        await signUpWithEmail({ 
+            email: data.email, 
+            password: data.password 
+        }).then((res: FirebaseResult) => {
+              if (res.isSuccess) {
+                setNotification({ message: res.message, status: 'success' });
               } else {
-                console.log('新規登録失敗')
+                setNotification({ message: res.message, status: 'error' });
               }
             }
         )
@@ -38,33 +49,95 @@ export default function SignUpScreen() {
                 <h1>新規登録</h1>
                 <form onSubmit={onSubmit}>
                     <div className={styles.vstackInner}>
-                        <div className={styles.formControl}>
+                        <div className={errors.email ? `${styles.formControl} ${styles.invalid}` : styles.formControl}>
                             <label htmlFor='email'>メールアドレス</label>
-                            <input id='email' {...register('email')} />
+                            <input 
+                                id='email'
+                                {...register('email', {
+                                    required: '必須項目です',
+                                    maxLength: {
+                                        value: 50,
+                                        message: '50文字以内で入力してください',
+                                    },
+                                    pattern: {
+                                        value:
+                                        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9-]+\.+[a-zA-Z0-9-]+$/,
+                                        message: 'メールアドレスの形式が違います',
+                                    },
+                                })}
+                            />
+                            {errors.email && 
+                                <span className={styles.errorMessage}>
+                                    {errors.email.message}
+                                </span>
+                            }
                         </div>
-                        <div className={styles.formControl}>
+                        <div className={errors.password ? `${styles.formControl} ${styles.invalid}` : styles.formControl}>
                             <label htmlFor='password'>パスワード</label>
                             <div className={styles.inputGroup}>
                                 <input
                                     type={password ? 'text' : 'password'}
-                                    {...register('password')}
+                                    {...register('password', {
+                                        required: '必須項目です',
+                                        minLength: {
+                                            value: 8,
+                                            message: '8文字以上で入力してください',
+                                        },
+                                        maxLength: {
+                                            value: 50,
+                                            message: '50文字以内で入力してください',
+                                        },
+                                        pattern: {
+                                            value: /^(?=.*[A-Z])[0-9a-zA-Z]*$/,
+                                            message:
+                                            '半角英数字かつ少なくとも1つの大文字を含めてください',
+                                        },
+                                    })}
                                 />
                                 <button onClick={passwordClick}>
                                     {password ? 'Hide' : 'Show'}
                                 </button>
                             </div>
+                            {errors.password && 
+                                <span className={styles.errorMessage}>
+                                    {errors.password.message}
+                                </span>
+                            }
                         </div>
-                        <div className={styles.formControl}>
+                        <div className={errors.confirm ? `${styles.formControl} ${styles.invalid}` : styles.formControl}>
                             <label htmlFor='confirm'>パスワード確認</label>
                             <div className={styles.inputGroup}>
                                 <input
                                     type={confirm ? 'text' : 'password'}
-                                    {...register('confirm')}
+                                    {...register('confirm', {
+                                        required: '必須項目です',
+                                        minLength: {
+                                            value: 8,
+                                            message: '8文字以上で入力してください',
+                                        },
+                                        maxLength: {
+                                            value: 50,
+                                            message: '50文字以内で入力してください',
+                                        },
+                                        pattern: {
+                                            value: /^(?=.*[A-Z])[0-9a-zA-Z]*$/,
+                                            message:
+                                            '半角英数字かつ少なくとも1つの大文字を含めてください',
+                                        },
+                                        validate: (value) =>
+                                        value === getValues('password') ||
+                                        'パスワードが一致しません',
+                                    })}
                                 />
                                 <button onClick={confirmClick}>
                                     {confirm ? 'Hide' : 'Show'}
                                 </button>
                             </div>
+                            {errors.confirm && 
+                                <span className={styles.errorMessage}>
+                                    {errors.confirm.message}
+                                </span>
+                            }
                         </div>
                         <button className={styles.loginBtn} type='submit'>
                             新規登録
@@ -74,6 +147,11 @@ export default function SignUpScreen() {
                         </NextLink>
                     </div>
                 </form>
+                {notification.status && (
+                    <div className={`notification ${notification.status}`}>
+                        {notification.message}
+                    </div>
+                )}
             </div>
         </div>
     )
