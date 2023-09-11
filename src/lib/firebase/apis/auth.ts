@@ -1,12 +1,12 @@
 import { 
     createUserWithEmailAndPassword,
-    GoogleAuthProvider,
+    //GoogleAuthProvider,
     signInWithEmailAndPassword,
-    signInWithPopup,
+    //signInWithPopup,
     signOut
 } from 'firebase/auth'
-import { doc, setDoc } from 'firebase/firestore';
-import { auth,db } from '@/lib/firebase/config'
+import { auth } from '@/lib/firebase/config'
+
 
 /** firebaseの処理結果 */
 export type FirebaseResult = {
