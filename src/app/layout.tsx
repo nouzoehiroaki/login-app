@@ -1,6 +1,7 @@
 import DesignProvider from '@/common/providers/design_provider'
 import type { Metadata } from 'next'
 import '@/styles/globals.scss'
+import { AuthProvider } from '@/lib/firebase/context/auth'
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -15,7 +16,9 @@ export default function RootLayout({
     return (
         <html lang='ja'>
             <body>
-                <DesignProvider>{children}</DesignProvider>
+                <AuthProvider>
+                    <DesignProvider>{children}</DesignProvider>
+                </AuthProvider>
             </body>
         </html>
     )
