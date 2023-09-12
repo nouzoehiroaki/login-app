@@ -32,6 +32,7 @@ export default function SignInScreen() {
         }).then((res: FirebaseResult) => {
             if (res.isSuccess) {
                 setNotification({ message: res.message, status: 'success' });
+                router.push('/');
             } else {
                 setNotification({ message: res.message, status: 'error' });
             }

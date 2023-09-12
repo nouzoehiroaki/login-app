@@ -3,9 +3,10 @@ import {
     signInWithEmailAndPassword,
     signOut
 } from 'firebase/auth'
-import { auth, db } from '@/lib/firebase/config'
+import { auth, db, storage } from '@/lib/firebase/config'
 import { doc, setDoc } from 'firebase/firestore'
 import { Gender } from '@/lib/firebase/types/user'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 
 /** firebaseの処理結果 */
@@ -65,24 +66,39 @@ export const signInWithEmail = async (args: {
     return result
 }
 
+
 /**
- * ユーザーネームとEmailとPasswordと誕生日でサインアップ
+ * ユーザーネームとEmailとPasswordと誕生日とアイコンでサインアップ
  * @param username
  * @param email
  * @param password
  * @param dateOfBirth
+ * @param photoURL
  * @param gender
  * @returns Promise<FirebaseResult>
  */
+
+/**
+ * ファイルをFirebase Storageにアップロード
+ * @param file 
+ * @returns Promise<string> - ファイルのダウンロードURL
+ */
+
+const uploadFileToFirebase = async (file: File): Promise<string> => {
+    const storageRef = ref(storage, 'user-icons/' + file.name);
+    await uploadBytes(storageRef, file);
+    return await getDownloadURL(storageRef);
+}
 
 type SignUpWithEmailArgs = {
     username: string;
     email: string;
     password: string;
     dateOfBirth: string;
+    photoURL: string;
     gender?: Gender;
 };
-export const signUpWithEmail = async (args: SignUpWithEmailArgs): Promise<FirebaseResult> => {
+export const signUpWithEmail = async (args: SignUpWithEmailArgs & { file: File }): Promise<FirebaseResult> => {
     let result: FirebaseResult = { isSuccess: false, message: '' }
     try {
         const user = await createUserWithEmailAndPassword(
@@ -91,12 +107,15 @@ export const signUpWithEmail = async (args: SignUpWithEmailArgs): Promise<Fireba
             args.password
         )
         if (user) {
+            const photoURL = await uploadFileToFirebase(args.file);
+            
             const userDoc = doc(db, 'users', user.user.uid);
             await setDoc(userDoc, {
                 username: args.username,
                 email: args.email,
                 dateOfBirth: args.dateOfBirth,
-                gender: args.gender
+                gender: args.gender,
+                photoURL: photoURL
             });
             result = { isSuccess: true, message: '新規登録に成功しました' }
         }
