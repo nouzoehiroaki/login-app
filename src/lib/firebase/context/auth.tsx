@@ -32,12 +32,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 } else {
                   // ユーザーが未作成の場合、新規作成して格納
                   const appUser: User = {
-                    id: firebaseUser.uid,
-                    username: firebaseUser.displayName!,
-                    profileIconURL: firebaseUser.photoURL!,
-                    email: firebaseUser.email!,
-                    dateOfBirth: new Date(),
-                    gender:'male'
+                      id: firebaseUser.uid,
+                      username: firebaseUser.displayName!,
+                      profileIconURL: firebaseUser.photoURL!,
+                      email: firebaseUser.email!,
+                      dateOfBirth: firebaseUser.displayName!,
+                      gender:'male'
                   };
         
                   // Firestoreにユーザーデータを保存

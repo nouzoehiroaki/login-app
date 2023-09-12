@@ -4,6 +4,6 @@ export type User = {
     username: string;
     email: string;
     profileIconURL: string;
-    dateOfBirth: Date;
+    dateOfBirth: string;
     gender: Gender;
 };
