@@ -15,6 +15,11 @@ export default function HomeScreen() {
                 <p>
                     {user?.username ? `ようこそ、${user.username}さん` : 'ユーザー情報がありません'}
                 </p>
+                {user?.photoURL && 
+                    <div>
+                        <img src={user.photoURL} alt="ユーザーのプロフィール画像" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
+                    </div>
+                }
                 <div>
                     <button onClick={logoutFunction}>ログアウト</button>
                 </div>

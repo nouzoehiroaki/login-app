@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import styles from '@/styles/signup.module.scss'
 import { signUpWithEmail,FirebaseResult } from '@/lib/firebase/apis/auth'
 import { Gender } from '@/lib/firebase/types/user'
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 type formInputs = {
     username:string
@@ -15,7 +14,7 @@ type formInputs = {
     confirm: string
     dateOfBirth: string
     gender?: Gender
-    profileIconURL: string
+    photoURL: string
 }
 /** サインアップ画面
  * @screenname SignUpScreen
@@ -27,42 +26,40 @@ export default function SignUpScreen() {
         handleSubmit, 
         register,
         getValues,
-        formState: { errors, isSubmitting }
+        formState: { errors }
     } = useForm<formInputs>()
     const [password, setPassword] = useState(false)
     const [confirm, setConfirm] = useState(false)
     const [notification, setNotification] = useState<{ message: string, status: 'success' | 'error' | null }>({ message: '', status: null });
 
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setSelectedFile(e.target.files[0]);
+        }
+    };
+    
     const onSubmit = handleSubmit(async (data) => {
-        // let profileIconURL = '';
-        // if (data.profileIconURL && data.profileIconURL.length > 0) {
-        //     const file = data.profileIconURL[0] as unknown as File;
-        //     const extension = file.name.split('.').pop()?.toLowerCase();
-        //     if (['png', 'jpeg', 'jpg'].includes(extension!)) {
-        //         const storage = getStorage();
-        //         const storageRef = ref(storage, `profileIconURL/${file.name}`);
-        //         await uploadBytes(storageRef, file);
-        //         profileIconURL = await getDownloadURL(storageRef);
-
-        //     } else {
-        //         setNotification({ message: '許可されていないファイル形式です。', status: 'error' });
-        //         return;
-        //     }
-        // }
-        await signUpWithEmail({
-            username: data.username,
-            email: data.email, 
-            password: data.password,
-            dateOfBirth:data.dateOfBirth,
-            gender: data.gender
-        }).then((res: FirebaseResult) => {
-              if (res.isSuccess) {
-                setNotification({ message: res.message, status: 'success' });
-              } else {
-                setNotification({ message: res.message, status: 'error' });
+        if (selectedFile) {
+            await signUpWithEmail({
+                username: data.username,
+                email: data.email,
+                password: data.password,
+                dateOfBirth: data.dateOfBirth,
+                file: selectedFile,
+                gender: data.gender,
+                photoURL: ''
+            }).then((res: FirebaseResult) => {
+                if (res.isSuccess) {
+                  setNotification({ message: res.message, status: 'success' });
+                } else {
+                  setNotification({ message: res.message, status: 'error' });
+                }
               }
-            }
-        )
+          )
+        } else {
+            setNotification({ message: "プロフィール画像が選択されていません", status: 'error' });
+        }
     })
     const passwordClick = () => setPassword(!password)
     const confirmClick = () => setConfirm(!confirm)
@@ -208,16 +205,17 @@ export default function SignUpScreen() {
                             </select>
                         </div>
                         <div className={styles.formControl}>
-                            <label htmlFor='profileIconURL'>プロフィール画像</label>
+                            <label htmlFor='photoURL'>プロフィール画像</label>
                             <input
                                 type='file'
-                                id='profileIconURL'
+                                id='photoURL'
                                 accept='.png, .jpg, .jpeg'
-                                {...register('profileIconURL')}
+                                {...register('photoURL')}
+                                onChange={handleFileChange}
                             />
-                            {errors.profileIconURL && 
+                            {errors.photoURL && 
                                 <span className={styles.errorMessage}>
-                                    {errors.profileIconURL.message}
+                                    {errors.photoURL.message}
                                 </span>
                             }
                         </div>
