@@ -1,11 +1,11 @@
 import { 
     createUserWithEmailAndPassword,
-    //GoogleAuthProvider,
     signInWithEmailAndPassword,
-    //signInWithPopup,
     signOut
 } from 'firebase/auth'
-import { auth } from '@/lib/firebase/config'
+import { auth, db } from '@/lib/firebase/config'
+import { doc, setDoc } from 'firebase/firestore'
+import { Gender } from '@/lib/firebase/types/user'
 
 
 /** firebaseの処理結果 */
@@ -66,17 +66,23 @@ export const signInWithEmail = async (args: {
 }
 
 /**
- * EmailとPasswordでサインアップ
+ * ユーザーネームとEmailとPasswordと誕生日でサインアップ
  * @param username
  * @param email
  * @param password
+ * @param dateOfBirth
+ * @param gender
  * @returns Promise<FirebaseResult>
  */
 
-export const signUpWithEmail = async (args: {
-    email: string
-    password: string
-}): Promise<FirebaseResult> => {
+type SignUpWithEmailArgs = {
+    username: string;
+    email: string;
+    password: string;
+    dateOfBirth: string;
+    gender?: Gender;
+};
+export const signUpWithEmail = async (args: SignUpWithEmailArgs): Promise<FirebaseResult> => {
     let result: FirebaseResult = { isSuccess: false, message: '' }
     try {
         const user = await createUserWithEmailAndPassword(
@@ -85,6 +91,13 @@ export const signUpWithEmail = async (args: {
             args.password
         )
         if (user) {
+            const userDoc = doc(db, 'users', user.user.uid);
+            await setDoc(userDoc, {
+                username: args.username,
+                email: args.email,
+                dateOfBirth: args.dateOfBirth,
+                gender: args.gender
+            });
             result = { isSuccess: true, message: '新規登録に成功しました' }
         }
     } catch (error) {
