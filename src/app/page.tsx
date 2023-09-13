@@ -3,7 +3,7 @@ import { logout as logoutFunction } from '@/lib/firebase/apis/auth'
 import UserGuard from '../lib/firebase/apis/user-guard'
 import { useEffect } from 'react'
 import { useAuth } from '../lib/firebase/context/auth'
-import styles from '@/styles/signup.module.scss'
+import styles from '@/styles/Form.module.scss'
 export default function HomeScreen() {
     const user = useAuth();
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function HomeScreen() {
                     <button onClick={logoutFunction}>ログアウト</button>
                 </div>
                 <a href='/mypage' className={styles.signupLink}>
-                        <button className={styles.signupBtn}>マイページへ</button>
+                    <button className={styles.signupBtn}>マイページへ</button>
                 </a>
             </div>
         </UserGuard>

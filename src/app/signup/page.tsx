@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import styles from '@/styles/signup.module.scss'
+import styles from '@/styles/Form.module.scss'
 import { signUpWithEmail,FirebaseResult } from '@/lib/firebase/apis/auth'
 import { Gender } from '@/lib/firebase/types/user'
 
