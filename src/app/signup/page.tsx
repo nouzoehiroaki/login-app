@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from '@/styles/Form.module.scss'
+import update from '@/styles/Update.module.scss'
 import { signUpWithEmail,FirebaseResult } from '@/lib/firebase/apis/auth'
 import { Gender } from '@/lib/firebase/types/user'
 
@@ -34,10 +35,12 @@ export default function SignUpScreen() {
     const [notification, setNotification] = useState<{ message: string, status: 'success' | 'error' | null }>({ message: '', status: null });
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files && e.target.files[0];
         if (file) {
             setSelectedFile(file);
+            setSelectedFileName(file.name); 
             const ext = file.name.split(".").pop();
             if (!["png", "jpg", "jpeg"].includes(ext?.toLowerCase() || "")) {
                 setError("photoURL", {
@@ -76,7 +79,7 @@ export default function SignUpScreen() {
     return(
         <div className={styles.flexContainer}>
             <div className={styles.vstack}>
-                <h1>新規登録</h1>
+                <h1>アカウントの新規作成</h1>
                 <form onSubmit={onSubmit}>
                     <div className={styles.vstackInner}>
                         <div className={errors.username ? `${styles.formControl} ${styles.invalid}` : styles.formControl}>
@@ -191,7 +194,8 @@ export default function SignUpScreen() {
                             <label htmlFor='dateOfBirth'>誕生日</label>
                             <input 
                                 id='dateOfBirth'
-                                type='date' // 日付型の入力欄を使用
+                                className={styles.dateOfBirth}
+                                type='date'
                                 {...register('dateOfBirth', {
                                     required: '必須項目です',
                                 })}
@@ -204,39 +208,51 @@ export default function SignUpScreen() {
                         </div>
                         <div className={styles.formControl}>
                             <label htmlFor='gender'>性別</label>
-                            <select 
-                                id='gender'
-                                {...register('gender')} // バリデーションは不要ですが、後で追加することもできます
-                            >
-                                <option value="">選択してください</option>
-                                <option value="male">男性</option>
-                                <option value="female">女性</option>
-                            </select>
+                            <div className={styles.gender}>
+                                <select 
+                                    id='gender'
+                                    {...register('gender')} 
+                                >
+                                    <option value="">選択してください</option>
+                                    <option value="male">男性</option>
+                                    <option value="female">女性</option>
+                                    <option value="other">その他</option>
+                                </select>
+                            </div>
                         </div>
                         <div className={styles.formControl}>
                             <label htmlFor='photoURL'>プロフィール画像</label>
-                            <input
-                                type='file'
-                                id='photoURL'
-                                accept='.png, .jpg, .jpeg'
-                                {...register('photoURL')}
-                                onChange={handleFileChange}
-                            />
+                            <label className={styles.label}>
+                                <p>{selectedFileName || "ファイルを選択してください"}</p>
+                                <input
+                                    type='file'
+                                    id='photoURL'
+                                    className={styles.photoURL}
+                                    accept='.png, .jpg, .jpeg'
+                                    {...register('photoURL')}
+                                    onChange={handleFileChange}
+                                />
+                            </label>
                             {errors.photoURL && 
                                 <span className={styles.errorMessage}>
                                     {errors.photoURL.message}
                                 </span>
                             }
                         </div>
-                        <div className={styles.formControl}>
+                        <div className={`${styles.formControl} ${update.flex}`}>
                             <input 
                                 type='checkbox' 
                                 id='agreement' 
-
+                                className={update.agreement}
                                 checked={isAgreedToTerms} 
                                 onChange={() => setIsAgreedToTerms(!isAgreedToTerms)}
                             />
-                            <label htmlFor='agreement'><NextLink href="/path-to-your-terms-page">利用規約</NextLink>に同意します</label>
+                            <label htmlFor='agreement'>
+                                <NextLink href="https://menherasenpai.notion.site/457df49475494671807673a0a3346451" target='_blank' rel='noopener noreferrer'>
+                                    利用規約
+                                </NextLink>
+                                に同意します
+                            </label>
                         </div>
                         <button className={styles.loginBtn} type='submit' disabled={!isAgreedToTerms}>
                             新規登録

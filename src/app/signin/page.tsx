@@ -1,12 +1,12 @@
 'use client'
 import NextLink from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from '@/styles/Form.module.scss'
+import update from '@/styles/Update.module.scss'
 import { signInWithEmail,FirebaseResult } from '@/lib/firebase/apis/auth'
-
-
 type formInputs = {
     email: string
     password: string
@@ -42,9 +42,20 @@ export default function SignInScreen() {
         })
     })
     return(
-        <div className={styles.flexContainer}>
+        <div className={`${styles.flexContainer} ${update.firstView}`}>
             <div className={styles.vstack}>
-                <h1>ログイン</h1>
+                <h1>
+                    <picture>
+                        <source srcSet="/form/pi_login_logo.webp" type="image/webp" />
+                        <Image
+                            src="/form/pi_login_logo.jpg"
+                            alt="ログイン"
+                            width={200}
+                            height={200}
+                            className={update.logo}
+                        />
+                    </picture>
+                </h1>
                 <form onSubmit={onSubmit}>
                     <div className={styles.vstackInner}>
                         <div className={errors.email ? `${styles.formControl} ${styles.invalid}` : styles.formControl}>
@@ -70,7 +81,7 @@ export default function SignInScreen() {
                                     {...register('password', {
                                         required: '必須項目です',
                                     })}
-                                 />
+                                />
                                 <button onClick={() => setShow(!show)}>
                                 {show ? 'Hide' : 'Show'}
                                 </button>
