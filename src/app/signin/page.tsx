@@ -1,7 +1,6 @@
 'use client'
 import NextLink from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import styles from '@/styles/Form.module.scss'
@@ -16,14 +15,16 @@ type formInputs = {
  * @description ユーザのサインインを行う画面
  */
 export default function SignInScreen() {
-    const router = useRouter()
     const { 
         handleSubmit, 
         register,
-        formState: { errors, isSubmitting } 
+        formState: { errors } 
     } = useForm<formInputs>()
     const [show, setShow] = useState<boolean>(false)
     const [notification, setNotification] = useState<{ message: string, status: 'success' | 'error' | null }>({ message: '', status: null });
+    const closeNotification = () => {
+        setNotification({ ...notification, status: null });
+    };
     
     const onSubmit = handleSubmit(async (data) => {
         await signInWithEmail({ 
@@ -33,9 +34,8 @@ export default function SignInScreen() {
             if (res.isSuccess) {
                 setNotification({ message: res.message, status: 'success' });
                 setTimeout(() => {
-                    router.push('/');
+                    window.location.href = '/';
                 }, 500);
-                //router.push('/');
             } else {
                 setNotification({ message: res.message, status: 'error' });
             }
@@ -83,7 +83,7 @@ export default function SignInScreen() {
                                         required: '必須項目です',
                                     })}
                                 />
-                                <button onClick={() => setShow(!show)}>
+                                <button className={styles.show} type='button' onClick={() => setShow(!show)}>
                                 {show ? 'Hide' : 'Show'}
                                 </button>
                             </div>
@@ -93,7 +93,9 @@ export default function SignInScreen() {
                                 </span>
                             }
                         </div>
-                        <button className={styles.loginBtn}>ログイン</button>
+                        <button className={styles.loginBtn} type='submit'>
+                            ログイン
+                        </button>
                         <NextLink href='/signup' className={styles.signupLink}>
                             <button className={styles.signupBtn}>新規登録はこちらから</button>
                         </NextLink>
@@ -101,7 +103,10 @@ export default function SignInScreen() {
                 </form>
                 {notification.status && (
                     <div className={`notification ${notification.status}`}>
-                        {notification.message}
+                        <div className='box'>
+                            <span onClick={closeNotification}></span>
+                            {notification.message}
+                        </div>
                     </div>
                 )}
             </div>

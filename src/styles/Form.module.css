@@ -58,10 +58,13 @@
   position: relative;
 }
 .flexContainer .vstack form .vstackInner .formControl .gender select {
-  border: 1px solid transparent;
-  font-size: 1.25em;
+  font-size: 1rem;
   color: #444;
   cursor: pointer;
+  background: #f3f3f3;
+  border: 1px solid #bbb;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+  background: -webkit-linear-gradient(top, #ffffff 0%, #e5e5e5 100%);
 }
 .flexContainer .vstack form .vstackInner .formControl .gender::after {
   content: "";
@@ -109,6 +112,9 @@
   padding: 0.4rem;
   color: #fff;
   border: none;
+}
+.flexContainer .vstack form .vstackInner .formControl .inputGroup button.show {
+  cursor: pointer;
 }
 .flexContainer .vstack form .vstackInner .formControl .errorMessage {
   color: red;

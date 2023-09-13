@@ -33,7 +33,9 @@ export default function SignUpScreen() {
     const [password, setPassword] = useState(false)
     const [confirm, setConfirm] = useState(false)
     const [notification, setNotification] = useState<{ message: string, status: 'success' | 'error' | null }>({ message: '', status: null });
-
+    const closeNotification = () => {
+        setNotification({ ...notification, status: null });
+    };
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,7 +148,7 @@ export default function SignUpScreen() {
                                         },
                                     })}
                                 />
-                                <button onClick={passwordClick}>
+                                <button className={styles.show} type='button' onClick={passwordClick}>
                                     {password ? 'Hide' : 'Show'}
                                 </button>
                             </div>
@@ -182,7 +184,7 @@ export default function SignUpScreen() {
                                         'パスワードが一致しません',
                                     })}
                                 />
-                                <button onClick={confirmClick}>
+                                <button className={styles.show} type='button' onClick={confirmClick}>
                                     {confirm ? 'Hide' : 'Show'}
                                 </button>
                             </div>
@@ -266,7 +268,10 @@ export default function SignUpScreen() {
                 </form>
                 {notification.status && (
                     <div className={`notification ${notification.status}`}>
-                        {notification.message}
+                        <div className='box'>
+                            <span onClick={closeNotification}></span>
+                            {notification.message}
+                        </div>
                     </div>
                 )}
             </div>
