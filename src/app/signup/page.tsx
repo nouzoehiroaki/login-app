@@ -25,8 +25,9 @@ export default function SignUpScreen() {
     const { 
         handleSubmit, 
         register,
+        setError,
         getValues,
-        formState: { errors }
+        formState: { errors, isSubmitting }
     } = useForm<formInputs>()
     const [password, setPassword] = useState(false)
     const [confirm, setConfirm] = useState(false)
@@ -34,8 +35,16 @@ export default function SignUpScreen() {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            setSelectedFile(e.target.files[0]);
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            setSelectedFile(file);
+            const ext = file.name.split(".").pop();
+            if (!["png", "jpg", "jpeg"].includes(ext?.toLowerCase() || "")) {
+                setError("photoURL", {
+                    type: "manual",
+                    message: "有効なファイル形式を選択してください (.png, .jpg, .jpeg)"
+                });
+            }
         }
     };
     
@@ -63,7 +72,7 @@ export default function SignUpScreen() {
     })
     const passwordClick = () => setPassword(!password)
     const confirmClick = () => setConfirm(!confirm)
-
+    const [isAgreedToTerms, setIsAgreedToTerms] = useState(false);
     return(
         <div className={styles.flexContainer}>
             <div className={styles.vstack}>
@@ -219,7 +228,17 @@ export default function SignUpScreen() {
                                 </span>
                             }
                         </div>
-                        <button className={styles.loginBtn} type='submit'>
+                        <div className={styles.formControl}>
+                            <input 
+                                type='checkbox' 
+                                id='agreement' 
+
+                                checked={isAgreedToTerms} 
+                                onChange={() => setIsAgreedToTerms(!isAgreedToTerms)}
+                            />
+                            <label htmlFor='agreement'><NextLink href="/path-to-your-terms-page">利用規約</NextLink>に同意します</label>
+                        </div>
+                        <button className={styles.loginBtn} type='submit' disabled={!isAgreedToTerms}>
                             新規登録
                         </button>
                         <NextLink href='/signin' className={styles.signupLink}>
@@ -236,3 +255,4 @@ export default function SignUpScreen() {
         </div>
     )
 }
+

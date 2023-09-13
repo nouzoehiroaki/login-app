@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .flexContainer {
   display: flex;
   flex-direction: column;
@@ -75,6 +76,10 @@
 }
 .flexContainer .vstack form .vstackInner .loginBtn:hover {
   background-color: #004d4d;
+}
+.flexContainer .vstack form .vstackInner .loginBtn[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed; /* クリック不可のカーソルを表示 */
 }
 .flexContainer .vstack form .vstackInner .signupLink {
   display: block;

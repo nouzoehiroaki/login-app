@@ -75,6 +75,10 @@
                     &:hover {
                         background-color: darken(teal, 10%);
                     }
+                    &[disabled] {
+                        background-color: #ccc;
+                        cursor: not-allowed; /* クリック不可のカーソルを表示 */
+                    }
                 }
                 .signupLink{
                     display: block;
