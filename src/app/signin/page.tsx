@@ -77,6 +77,7 @@ export default function SignInScreen() {
                             <label htmlFor='password'>パスワード</label>
                             <div className={styles.inputGroup}>
                                 <input 
+                                    id='password'
                                     type={show ? 'text' : 'password'}
                                     {...register('password', {
                                         required: '必須項目です',

@@ -127,6 +127,7 @@ export default function SignUpScreen() {
                             <label htmlFor='password'>パスワード</label>
                             <div className={styles.inputGroup}>
                                 <input
+                                    id='password'
                                     type={password ? 'text' : 'password'}
                                     {...register('password', {
                                         required: '必須項目です',
@@ -159,6 +160,7 @@ export default function SignUpScreen() {
                             <label htmlFor='confirm'>パスワード確認</label>
                             <div className={styles.inputGroup}>
                                 <input
+                                    id='confirm'
                                     type={confirm ? 'text' : 'password'}
                                     {...register('confirm', {
                                         required: '必須項目です',
