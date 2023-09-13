@@ -1,0 +1,142 @@
+.main {
+  position: relative;
+}
+.main::before {
+  content: "";
+  background-image: url(/top/bg.jpg);
+  background-image: url(/top/bg.webp);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.main .wrap {
+  position: relative;
+  max-width: 1200px;
+  margin: 100px auto;
+  padding: 5%;
+  background: rgba(255, 255, 255, 0.3);
+}
+.main .wrap h1 {
+  font-size: 3rem;
+}
+.main .wrap h1 span {
+  font-size: 4rem;
+  margin: 0 15px;
+}
+@media (max-width: 767px) {
+  .main .wrap h1 span {
+    display: block;
+    margin: 15px 0;
+  }
+}
+.main .wrap .greetingBox p {
+  font-size: 1.5rem;
+  line-height: 1.8;
+}
+.main .wrap .greetingBox p span {
+  display: block;
+}
+@media (max-width: 767px) {
+  .main .wrap .greetingBox p span {
+    background: rgba(158, 194, 226, 0.3607843137);
+    padding: 15px;
+    border-radius: 10px;
+    line-height: 1.4;
+    margin: 10px 0;
+  }
+}
+.main .wrap .greetingBox p span .githubLink {
+  color: #333;
+  overflow-wrap: break-word;
+}
+.main .wrap .box h2 {
+  font-size: 2.5rem;
+  border-bottom: 2px solid #4c9ac0;
+  padding: 0.3em;
+  margin-bottom: 0.3em;
+}
+.main .wrap .box h2:first-letter {
+  font-size: 1.5em;
+  color: #4c9ac0;
+}
+.main .wrap .box ul {
+  padding: 0.5em;
+  list-style-type: none;
+}
+.main .wrap .box ul li {
+  position: relative;
+  padding: 0.5em 1em 0.5em 2.3em;
+  margin-bottom: 5px;
+  border-bottom: 1px solid rgb(25, 118, 210);
+}
+.main .wrap .box ul li::after, .main .wrap .box ul li::before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+.main .wrap .box ul li::before {
+  top: 50%;
+  left: 0.2em;
+  width: 17px;
+  height: 17px;
+  background: rgb(25, 118, 210);
+  transform: translateY(-50%);
+}
+.main .wrap .box ul li::after {
+  top: 50%;
+  left: -0.01em;
+  width: 14px;
+  height: 14px;
+  background: rgba(25, 118, 210, 0.5);
+}
+.main .wrap .box .summary p {
+  font-size: 1.4rem;
+}
+.main .wrap .box .dateOfBirth p {
+  font-size: 1.2rem;
+}
+.main .wrap .box .dateOfBirth p span {
+  color: rgba(240, 43, 43, 0.9882352941);
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-right: 10px;
+}
+.main .wrap .box .images {
+  position: relative;
+  max-width: 500px;
+  width: 95%;
+}
+.main .wrap .box .images img {
+  width: 100%;
+}
+.main .wrap .box .images::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  border-image-source: repeating-linear-gradient(45deg, #fff, #fff 3px, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 6px);
+  border-image-slice: 20;
+  border-image-repeat: round;
+  border-style: solid;
+  border-width: 20px;
+}
+.main .wrap .logout button {
+  background-color: teal;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+  width: 100%;
+  max-width: 500px;
+}
+/*# sourceMappingURL=Page.module.css.map */

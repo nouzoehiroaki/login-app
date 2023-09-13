@@ -4,6 +4,10 @@
 body{
     margin: 0;
 }
+h1{
+    margin: 0;
+    line-height: 1;
+}
 img{
     display: block;
 }
@@ -12,17 +16,42 @@ input,select,button{
     -webkit-appearance: none;
 }
 .notification {
-    padding: 15px;
-    margin-top: 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 1024px;
+    .box{
+        padding: 45px 0;
+        border-radius: 5px;
+        text-align: center;
+        width: 100%;
+        font-size: 2rem;
+        position: relative;
+        span{
+            cursor: pointer;
+            &::after{
+                content: "✖️";
+                position: absolute;
+                right: 0;
+                top: 0;
+                line-height: 1;
+                background: aliceblue;
+                border-radius: 100%;
+                font-size: 1.7rem;
+                padding: 3px;
+            }
+        }
+    }
     &.success {
-        background-color: #DFF2BF;
+        background-color: #dff2bfcf;
         color: #4F8A10;
     }
     &.error {
-        background-color: #FFD2D2;
+        background-color: #ffd2d2cf;
         color: #D8000C;
     }
 }

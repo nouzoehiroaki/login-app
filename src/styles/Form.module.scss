@@ -53,10 +53,13 @@
                     .gender{
                         position: relative;
                         select{
-                            border: 1px solid transparent;
-                            font-size:1.25em;
+                            font-size: 1rem;
                             color: #444;
                             cursor: pointer;
+                            background: #f3f3f3;
+                            border: 1px solid #bbb;
+                            box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+                            background: -webkit-linear-gradient(top, #ffffff 0%,#e5e5e5 100%);
                         }
                         &::after{
                             content: "";
@@ -106,6 +109,9 @@
                             padding: 0.4rem;
                             color: #fff;
                             border: none;
+                            &.show{
+                                cursor: pointer;
+                            }
                         }
                     }
                     .errorMessage{
