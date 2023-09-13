@@ -3,6 +3,7 @@ import { logout as logoutFunction } from '@/lib/firebase/apis/auth'
 import UserGuard from '../lib/firebase/apis/user-guard'
 import { useEffect } from 'react'
 import { useAuth } from '../lib/firebase/context/auth'
+import styles from '@/styles/signup.module.scss'
 export default function HomeScreen() {
     const user = useAuth();
     useEffect(() => {
@@ -12,17 +13,12 @@ export default function HomeScreen() {
         <UserGuard>
             <div>
                 <p>ホーム画面</p>
-                <p>
-                    {user?.username ? `ようこそ、${user.username}さん` : 'ユーザー情報がありません'}
-                </p>
-                {user?.photoURL && 
-                    <div>
-                        <img src={user.photoURL} alt="ユーザーのプロフィール画像" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
-                    </div>
-                }
                 <div>
                     <button onClick={logoutFunction}>ログアウト</button>
                 </div>
+                <a href='/mypage' className={styles.signupLink}>
+                        <button className={styles.signupBtn}>マイページへ</button>
+                </a>
             </div>
         </UserGuard>
     )

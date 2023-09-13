@@ -32,7 +32,10 @@ export default function SignInScreen() {
         }).then((res: FirebaseResult) => {
             if (res.isSuccess) {
                 setNotification({ message: res.message, status: 'success' });
-                router.push('/');
+                setTimeout(() => {
+                    router.push('/');
+                }, 500);
+                //router.push('/');
             } else {
                 setNotification({ message: res.message, status: 'error' });
             }
@@ -50,10 +53,6 @@ export default function SignInScreen() {
                                 id='email'
                                 {...register('email', {
                                     required: '必須項目です',
-                                    maxLength: {
-                                        value: 50,
-                                        message: '50文字以内で入力してください',
-                                    },
                                 })}
                             />
                             {errors.email && 
@@ -70,14 +69,6 @@ export default function SignInScreen() {
                                     type={show ? 'text' : 'password'}
                                     {...register('password', {
                                         required: '必須項目です',
-                                        minLength: {
-                                            value: 8,
-                                            message: '8文字以上で入力してください',
-                                        },
-                                        maxLength: {
-                                            value: 50,
-                                            message: '50文字以内で入力してください',
-                                        },
                                     })}
                                  />
                                 <button onClick={() => setShow(!show)}>
