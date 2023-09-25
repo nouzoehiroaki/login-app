@@ -101,7 +101,7 @@ export default function HomeScreen() {
                         <ul>
                             <li>
                             <NextLink href='https://kgetheshadowmen.com/' className={styles.githubLink} target='_blank' rel='noopener noreferrer'>
-                                オフィシャルウェブサイト
+                                Official WebSite
                             </NextLink>
                             </li>
                             <li>
