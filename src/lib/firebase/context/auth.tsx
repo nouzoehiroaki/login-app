@@ -1,6 +1,6 @@
 /** @jsxImportSource react */
 // use client
-"use client"
+'use client'
 import { 
     onAuthStateChanged
 } from 'firebase/auth'

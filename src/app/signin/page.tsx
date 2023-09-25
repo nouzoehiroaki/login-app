@@ -46,10 +46,10 @@ export default function SignInScreen() {
             <div className={styles.vstack}>
                 <h1>
                     <picture>
-                        <source srcSet="/form/pi_login_logo.webp" type="image/webp" />
+                        <source srcSet='/form/pi_login_logo.webp' type="image/webp" />
                         <Image
-                            src="/form/pi_login_logo.jpg"
-                            alt="ログイン"
+                            src='/form/pi_login_logo.jpg'
+                            alt='ログイン'
                             width={200}
                             height={200}
                             className={update.logo}

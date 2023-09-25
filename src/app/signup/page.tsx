@@ -44,10 +44,10 @@ export default function SignUpScreen() {
             setSelectedFile(file);
             setSelectedFileName(file.name); 
             const ext = file.name.split(".").pop();
-            if (!["png", "jpg", "jpeg"].includes(ext?.toLowerCase() || "")) {
-                setError("photoURL", {
-                    type: "manual",
-                    message: "有効なファイル形式を選択してください (.png, .jpg, .jpeg)"
+            if (!['png', 'jpg', 'jpeg'].includes(ext?.toLowerCase() || '')) {
+                setError('photoURL', {
+                    type: 'manual',
+                    message: '有効なファイル形式を選択してください (.png, .jpg, .jpeg)'
                 });
             }
         }
@@ -72,7 +72,7 @@ export default function SignUpScreen() {
               }
           )
         } else {
-            setNotification({ message: "プロフィール画像が選択されていません", status: 'error' });
+            setNotification({ message: 'プロフィール画像が選択されていません', status: 'error' });
         }
     })
     const passwordClick = () => setPassword(!password)
@@ -227,7 +227,7 @@ export default function SignUpScreen() {
                         <div className={styles.formControl}>
                             <label htmlFor='photoURL'>プロフィール画像</label>
                             <label className={styles.label}>
-                                <p>{selectedFileName || "ファイルを選択してください"}</p>
+                                <p>{selectedFileName || 'ファイルを選択してください'}</p>
                                 <input
                                     type='file'
                                     id='photoURL'
@@ -252,7 +252,7 @@ export default function SignUpScreen() {
                                 onChange={() => setIsAgreedToTerms(!isAgreedToTerms)}
                             />
                             <label htmlFor='agreement'>
-                                <NextLink href="https://pylorhythm.vercel.app/" target='_blank' rel='noopener noreferrer'>
+                                <NextLink href='https://pylorhythm.vercel.app/' target='_blank' rel='noopener noreferrer'>
                                     利用規約
                                 </NextLink>
                                 に同意します
