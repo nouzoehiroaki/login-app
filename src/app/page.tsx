@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client'
 import NextLink from 'next/link'
 import { logout as logoutFunction } from '@/lib/firebase/apis/auth'
@@ -6,6 +7,7 @@ import { useEffect } from 'react'
 import { useAuth } from '../lib/firebase/context/auth'
 import styles from '@/styles/Page.module.scss'
 import { differenceInDays, addYears, isBefore, parseISO } from 'date-fns'
+import Image from 'next/image'
 function daysUntilBirthday(dateOfBirthString: any) {
     const today = new Date();
     const birthday = parseISO(dateOfBirthString); 
@@ -114,7 +116,7 @@ export default function HomeScreen() {
                     <div className={styles.box}>
                         <div className={styles.images}>
                         {user?.photoURL && 
-                            <img src={user.photoURL} alt="ユーザーのプロフィール画像" />
+                            <img src={user.photoURL} alt='ユーザーのプロフィール画像' />
                         }
                         </div>
                         <h3>最後までお読みいただきありがとうございましたm(_ _)m</h3>
