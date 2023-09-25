@@ -44,72 +44,72 @@ export default function HomeScreen() {
                             になります。
                         </p>
                         <p>
-                            下記、改善できそうな点を記載します
+                            早速ですが、エンジニアである僕のもう一つの姿を紹介します。
                         </p>
                     </div>
                     <div className={styles.box}>
                         <h2>
-                            改善できる点
-                        </h2>
-                        <ul>
-                            <li>
-                                プロフィール画像を任意にして、設定しない人はnoimageにする
-                            </li>
-                            <li>コンポーネントで部品分けする</li>
-                            <li>Scssの設計をもう少し簡素化する</li>
-                            <li>
-                                Jest等を使い、テストコードの実装法についてキャッチアップしていきたい
-                            </li>
-                        </ul>
-                    </div>
-                    <div className={styles.box}>
-                        <h2>
-                            反省点
-                        </h2>
-                        <ul>
-                            <li>
-                                全体的なキャッチアップに時間がかかり、ギリギリになってしまった
-                            </li>
-                            <li>
-                                Next.js 13.2のバージョンアップにより、わからない部分がまだまだたくさんある（useRouterたHEADなど）
-                            </li>
-                            <li>
-                                最後にlinterやformatterを設定し、fixさせたかったが、時間が足りなかった
-                            </li>
-                            <li>
-                                作業途中に色んな改善すべき点を見出すも、忘れてしまう。
-                            </li>
-                        </ul>
-                    </div>
-                    <div className={styles.box}>
-                        <h2>
-                            まとめ
+                            KGE THE SHADOWMEN
                         </h2>
                         <div className={styles.summary}>
                             <p>
-                                フロントエンドとしての実力の低さを思い知ったが、日々キャッチアップしていくことで少しずつ前に進めるんだと実感し、とても有意義な課題作成の時間だった。<br />
-                                今後ともアプリ開発に勤しんでいきたい。（どうでも良かっらたすみません）
+                            知る人ぞ知る、JAPANESE HIPHOPシーン屈指のフロウ巧者。
+                            2009年 1st Album "NEWGIGANTE"をリリース。
+                            その後、Beat Maker HIMUKIとの共作、LOCAL FAMILYを皮切りに、3枚のAlbumをリリース。
+                            MUROの"DA CREATOR"より"AYO BLUES"や、GAGLEの "VG+"より"舌炎上"、"VANTA BLACK"より"和背負い"に客演。
+                            徐々にその名を浸透させている。
+                            カゲザシャドメンと読む。
                             </p>
                         </div>
                     </div>
                     <div className={styles.box}>
                         <h2>
-                            最後に
+                            これまでのメディア出演
                         </h2>
-                        <div className={styles.box}>
-                            <div className={styles.dateOfBirth}>
-                            {user?.dateOfBirth && (
-                                <p>
-                                    <span>{days}</span>
-                                    日後は{user.username}さんの誕生日です！
-                                </p>
-                            )}
-                                <p>ささやかではありますが、僕からのプレゼントです。</p>
-                                <p>
-                                    アップロードしてくれたプロフィール画像を額に入れ、表示します！
-                                </p>
-                            </div>
-                        </div>
+                        <ul>
+                            <li>
+                            SPACE SHOWER TV 「BIG BANG」
+                            </li>
+                            <li>
+                            日本テレビ「シュガーヒルストリート」
+                            </li>
+                            <li>
+                            NHK-BS 「J-MELO Japanese HipHop Special」
+                            </li>
+                            <li>
+                            テレビ朝日「フリースタイルダンジョン」
+                            </li>
+                        </ul>
+                    </div>
+                    <div className={styles.box}>
+                        <h2>
+                            ラジオ出演
+                        </h2>
+                        <ul>
+                            <li>
+                            東京FM「サイプレス上野の日本語ラップキラッ!」
+                            </li>
+                            <li>
+                            Fm yokohama「SKY-HIのACT-A-FOOL」
+                            </li>
+                        </ul>
+                    </div>
+                    <div className={styles.box}>
+                        <h2>
+                            参考リンク
+                        </h2>
+                        <ul>
+                            <li>
+                            <NextLink href='https://kgetheshadowmen.com/' className={styles.githubLink} target='_blank' rel='noopener noreferrer'>
+                                オフィシャルウェブサイト
+                            </NextLink>
+                            </li>
+                            <li>
+                            <NextLink href='https://ja.wikipedia.org/wiki/KGE_THE_SHADOWMEN' className={styles.githubLink} target='_blank' rel='noopener noreferrer'>
+                                Wikipedia
+                            </NextLink>
+                            </li>
+                        </ul>
                     </div>
                     <div className={styles.box}>
                         <div className={styles.images}>

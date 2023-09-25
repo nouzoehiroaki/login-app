@@ -252,7 +252,7 @@ export default function SignUpScreen() {
                                 onChange={() => setIsAgreedToTerms(!isAgreedToTerms)}
                             />
                             <label htmlFor='agreement'>
-                                <NextLink href="https://menherasenpai.notion.site/457df49475494671807673a0a3346451" target='_blank' rel='noopener noreferrer'>
+                                <NextLink href="https://pylorhythm.vercel.app/" target='_blank' rel='noopener noreferrer'>
                                     利用規約
                                 </NextLink>
                                 に同意します
